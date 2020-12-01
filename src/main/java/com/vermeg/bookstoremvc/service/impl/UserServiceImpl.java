@@ -11,7 +11,6 @@ import javax.persistence.EntityNotFoundException;
 
 
 @Service
-@Transactional
 public class UserServiceImpl extends GenericServiceImpl<User> implements UserService {
 
     private final UserRepository userRepository;
@@ -22,6 +21,7 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     }
 
     @Override
+    @Transactional
     public User update(User user) {
         return userRepository.update(user).orElseThrow(() -> new EntityNotFoundException("Could not update User"));
     }

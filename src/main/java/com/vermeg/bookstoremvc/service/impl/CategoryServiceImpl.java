@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 
 @Service
-@Transactional
 public class CategoryServiceImpl extends GenericServiceImpl<Category> implements CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -20,6 +19,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category> implements
     }
 
     @Override
+    @Transactional
     public Category update(Category category) {
         return categoryRepository.update(category).orElseThrow(() -> new EntityNotFoundException("Could not update Book"));
     }

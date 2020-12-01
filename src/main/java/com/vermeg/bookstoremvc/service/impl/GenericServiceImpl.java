@@ -2,11 +2,13 @@ package com.vermeg.bookstoremvc.service.impl;
 
 import com.vermeg.bookstoremvc.dao.repository.GenericRepository;
 import com.vermeg.bookstoremvc.service.GenericService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+@Transactional
 public abstract class GenericServiceImpl<E> implements GenericService<E> {
 
     private final GenericRepository genericRepository;

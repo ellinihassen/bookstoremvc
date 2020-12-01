@@ -10,7 +10,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Repository
-@Transactional
 public class AuthorRepositoryImpl extends GenericRepositoryImpl<Author> implements AuthorRepository {
 
     @Override

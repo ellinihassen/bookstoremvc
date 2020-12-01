@@ -15,7 +15,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-@Transactional
 public class BookServiceImpl extends GenericServiceImpl<Book> implements BookService {
 
     private final BookRepository bookRepository;
@@ -32,21 +31,25 @@ public class BookServiceImpl extends GenericServiceImpl<Book> implements BookSer
     }
 
     @Override
+    @Transactional
     public Book update(Book book) {
         return bookRepository.update(book).orElseThrow(() -> new EntityNotFoundException("Could not update Book"));
     }
 
     @Override
+    @Transactional
     public List<Book> getAllBooksByCategoryId(Long id) {
         return bookRepository.findAllByCategoryId(id);
     }
 
     @Override
+    @Transactional
     public List<Book> getBookByAuthorId(Long id) {
         return bookRepository.findAllByCategoryId(id);
     }
 
     @Override
+    @Transactional
     public Double calculateMontantTotal(List<Book> books) {
         List<OrderItem> items = bookMapper.mapBookListToOrderItemList(books);
         double somme =0;

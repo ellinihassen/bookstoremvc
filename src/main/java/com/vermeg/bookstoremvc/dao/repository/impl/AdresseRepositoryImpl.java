@@ -14,9 +14,17 @@ public class AdresseRepositoryImpl extends GenericRepositoryImpl<Adresse> implem
     @Override
     public Optional<Adresse> update(Adresse adresse) {
         Session currentSession = sessionFactory.getCurrentSession();
-        findById(adresse.getId()).orElseThrow(() -> new EntityNotFoundException("adresse not found to update it"));
-        currentSession.update(adresse);
-        return Optional.of(adresse);
+
+        Adresse oldAddress = findById(adresse.getId()).orElseThrow(() -> new EntityNotFoundException("adresse not found to update it"));
+
+        oldAddress.setZipCode(adresse.getZipCode());
+        oldAddress.setStreet(adresse.getStreet());
+        oldAddress.setCity(adresse.getCity());
+        oldAddress.setCountry(adresse.getCountry());
+
+        currentSession.update(oldAddress);
+
+        return Optional.of(oldAddress);
 
     }
 }

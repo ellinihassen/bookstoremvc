@@ -13,7 +13,6 @@ import java.util.List;
 
 
 @Service
-@Transactional
 public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implements OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
@@ -24,12 +23,14 @@ public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implemen
     }
 
     @Override
+    @Transactional
     public OrderItem update(OrderItem orderItem) {
         return orderItemRepository.update(orderItem).orElseThrow(() -> new EntityNotFoundException("Could not update Book"));
 
     }
 
     @Override
+    @Transactional
     public List<OrderItem> getItemsByOrder(Long id) {
         return orderItemRepository.findAllByOrderId(id);
     }

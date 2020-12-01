@@ -22,7 +22,7 @@ public class Author implements Serializable {
     private String lastName;
     @Column(name = "email")
     private String email;
-    @OneToMany(mappedBy = "author" ,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "author")
     private List<Book> books;
 
 

@@ -22,7 +22,7 @@ public class AddressController extends GenericController<Adresse> {
 
     @PutMapping("")
     public Adresse updateAdresse(@RequestBody Adresse adresse) throws Throwable {
-        return adresseServie.save(adresse);
+        return adresseServie.update(adresse);
 
     }
 

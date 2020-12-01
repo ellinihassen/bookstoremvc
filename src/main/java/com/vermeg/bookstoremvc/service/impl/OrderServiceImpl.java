@@ -11,7 +11,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-@Transactional
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -23,22 +22,26 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
 
 
     @Override
+    @Transactional
     public Order update(Order order) {
         return orderRepository.update(order).orElseThrow(() -> new EntityNotFoundException("Could not update Order"));
 
     }
 
     @Override
+    @Transactional
     public List<Order> getOrdersByUser(Long id) {
         return orderRepository.findByUserId(id);
     }
 
     @Override
+    @Transactional
     public List<Order> getOrderByUserAndStatus(Long id, String status) {
         return orderRepository.findByUserIdAndStatus(id,status);
     }
 
     @Override
+    @Transactional
     public Order validateOrder(Order order) {
         order.setStatus(OrderStateEnum.VALIDATED);
         return order;

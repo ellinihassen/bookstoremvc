@@ -13,7 +13,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
+
 public abstract class GenericRepositoryImpl<E> implements GenericRepository<E> {
 
     @Autowired
@@ -61,12 +61,8 @@ public abstract class GenericRepositoryImpl<E> implements GenericRepository<E> {
 
         findById(id).orElseThrow(() -> new EntityNotFoundException(clazz.getSimpleName() + " not found to update it"));
         // delete object with primary key
-        Query theQuery =
-                currentSession.createQuery(
-                        "delete from " + clazz + " where id=:id");
-        theQuery.setParameter("id", id);
-
-        theQuery.executeUpdate();
+        E myObject = (E) currentSession.load(clazz, id);
+        currentSession.delete(myObject);
     }
 
 

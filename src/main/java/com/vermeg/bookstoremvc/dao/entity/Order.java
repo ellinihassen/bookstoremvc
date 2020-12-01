@@ -32,7 +32,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "adresse_id")
     private Adresse adresse;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
     private static final Integer tva = 5;

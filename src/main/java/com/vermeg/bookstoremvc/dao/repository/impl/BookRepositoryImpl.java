@@ -17,8 +17,25 @@ public class BookRepositoryImpl extends GenericRepositoryImpl<Book> implements B
     @Override
     public Optional<Book> update(Book book) {
         Session currentSession = sessionFactory.getCurrentSession();
-        findById(book.getId()).orElseThrow(() -> new EntityNotFoundException("book not found to update it"));
-        currentSession.update(book);
+
+        Book oldBook=findById(book.getId()).orElseThrow(() -> new EntityNotFoundException("book not found to update it"));
+
+        oldBook.setTitle(book.getTitle());
+        oldBook.setPrice(book.getPrice());
+        oldBook.setReleaseDate(book.getReleaseDate());
+        oldBook.setDescription(book.getDescription());
+        oldBook.setPhotoName(book.getPhotoName());
+        oldBook.setProductInStock(book.getProductInStock());
+
+        if(book.getCategory()!=null && book.getCategory().getId()!=null){
+            oldBook.setCategory(book.getCategory());
+        }
+        if(book.getAuthor()!= null && book.getAuthor().getId() != null){
+            oldBook.setAuthor(book.getAuthor());
+        }
+
+        currentSession.update(oldBook);
+
         return Optional.of(book);
     }
 
