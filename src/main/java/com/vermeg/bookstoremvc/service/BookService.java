@@ -12,6 +12,6 @@ public interface BookService extends GenericService<Book> {
 
     public List<Book> getBookByAuthorId(Long id);
 
-    public Double calculateMontantTotal(List<Book> books);
+    public Double calculateTotalAmount(List<Book> books);
 
 }

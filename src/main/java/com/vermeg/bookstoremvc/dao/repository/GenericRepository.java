@@ -11,7 +11,7 @@ public interface GenericRepository<E> {
 
     public Optional<E> save(E entity);
 
-    public void deleteById(Long id);
+    public Boolean deleteById(Long id);
 
 
 }

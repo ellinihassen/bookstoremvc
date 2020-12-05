@@ -20,8 +20,13 @@ public class OrderRepositoryImpl extends GenericRepositoryImpl<Order> implements
     @Override
     public Optional<Order> update(Order order) {
         Session currentSession = sessionFactory.getCurrentSession();
-        findById(order.getId()).orElseThrow(() -> new EntityNotFoundException("order not found to update it"));
-        currentSession.update(order);
+        Order oldOrder = findById(order.getId()).orElseThrow(() -> new EntityNotFoundException("order not found to update it"));
+
+        oldOrder.setStatus(order.getStatus());
+
+        oldOrder.setAdresse(order.getAdresse());
+
+        currentSession.update(oldOrder);
         return Optional.of(order);
     }
 

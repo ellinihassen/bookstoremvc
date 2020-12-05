@@ -56,13 +56,14 @@ public abstract class GenericRepositoryImpl<E> implements GenericRepository<E> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public Boolean deleteById(Long id) {
         Session currentSession = sessionFactory.getCurrentSession();
 
         findById(id).orElseThrow(() -> new EntityNotFoundException(clazz.getSimpleName() + " not found to update it"));
-        // delete object with primary key
+
         E myObject = (E) currentSession.load(clazz, id);
         currentSession.delete(myObject);
+        return true;
     }
 
 

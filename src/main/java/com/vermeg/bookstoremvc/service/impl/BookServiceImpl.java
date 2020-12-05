@@ -45,16 +45,15 @@ public class BookServiceImpl extends GenericServiceImpl<Book> implements BookSer
     @Override
     @Transactional
     public List<Book> getBookByAuthorId(Long id) {
-        return bookRepository.findAllByCategoryId(id);
+        return bookRepository.findAllByAuthorId(id);
     }
 
     @Override
-    @Transactional
-    public Double calculateMontantTotal(List<Book> books) {
+    public Double calculateTotalAmount(List<Book> books) {
         List<OrderItem> items = bookMapper.mapBookListToOrderItemList(books);
         double somme =0;
         for (OrderItem orderItem : items) {
-            somme += orderItem.calaculateTotalPrice();
+            somme += orderItem.getPrice();
         }
         return somme;
     }

@@ -11,5 +11,5 @@ public interface GenericService<E> {
 
     public E save(E entity) throws Throwable;
 
-    public void deleteById(Long id);
+    public Boolean deleteById(Long id);
 }

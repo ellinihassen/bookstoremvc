@@ -1,20 +1,24 @@
 package com.vermeg.bookstoremvc.dao.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +27,7 @@ public class Book implements Serializable {
     private String title;
     private Double price;
 
-    private LocalDate releaseDate;
+    private Date releaseDate;
     private String description;
 
     @Column(name = "photo_name")

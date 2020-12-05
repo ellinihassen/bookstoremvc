@@ -39,7 +39,7 @@ public abstract class GenericServiceImpl<E> implements GenericService<E> {
     }
 
     @Override
-    public void deleteById(Long id) {
-        genericRepository.deleteById(id);
+    public Boolean deleteById(Long id) {
+       return genericRepository.deleteById(id);
     }
 }

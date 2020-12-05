@@ -35,9 +35,9 @@ public class BookController extends GenericController<Book> {
     }
 
 
-    @PostMapping("/calculMontantTotal/{books}")
-    public Double calculateMontantTotal(@RequestBody List<Book> books) {
-        return bookService.calculateMontantTotal(books);
+    @PostMapping("/calculateTotalAmount")
+    public Double calculateTotalAmount(@RequestBody List<Book> books) {
+        return bookService.calculateTotalAmount(books);
     }
 
 }

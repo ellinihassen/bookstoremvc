@@ -1,10 +1,10 @@
 package com.vermeg.bookstoremvc.dao.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.vermeg.bookstoremvc.constant.OrderStateEnum;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +17,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,9 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
+    @Transient
+    private Double totalPrice;
+
     private static final Integer tva = 5;
 
 
@@ -45,5 +51,10 @@ public class Order implements Serializable {
         this.date = date;
     }
 
-
+    public Double getTotalPrice() {
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getPrice();
+        }
+        return totalPrice;
+    }
 }

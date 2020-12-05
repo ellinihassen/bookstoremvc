@@ -1,5 +1,7 @@
 package com.vermeg.bookstoremvc.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Author implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,5 +30,10 @@ public class Author implements Serializable {
     @OneToMany(mappedBy = "author")
     private List<Book> books;
 
-
+    public Author(Long id, String name, String lastName, String email) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+    }
 }

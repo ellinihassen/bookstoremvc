@@ -1,16 +1,20 @@
 package com.vermeg.bookstoremvc.dao.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem implements Serializable {
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +25,8 @@ public class OrderItem implements Serializable {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+    @Transient
+    private Double price;
 
     public OrderItem(Book book, Integer quantity) {
         this.book = book;
@@ -32,7 +38,9 @@ public class OrderItem implements Serializable {
         this.quantity=1;
     }
 
-    public Double calaculateTotalPrice() {
-        return book.getPrice() * quantity;
+    public Double getPrice() {
+           price = book !=null ? book.getPrice() * quantity : 0;
+
+        return price;
     }
 }
