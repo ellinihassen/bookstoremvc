@@ -12,7 +12,7 @@ public abstract class GenericMapperImpl<D, E> implements GenericMapper<D, E> {
 
     @Override
     public List<D> mapToDtoList(List<E> entities) {
-        return entities.stream().map(e -> this.mapToDto(e)).collect(Collectors.toList());
+        return entities.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     @Override

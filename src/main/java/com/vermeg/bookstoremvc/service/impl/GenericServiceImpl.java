@@ -2,6 +2,7 @@ package com.vermeg.bookstoremvc.service.impl;
 
 import com.vermeg.bookstoremvc.dao.repository.GenericRepository;
 import com.vermeg.bookstoremvc.service.GenericService;
+import com.vermeg.bookstoremvc.service.mapper.GenericMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -9,33 +10,39 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Transactional
-public abstract class GenericServiceImpl<E> implements GenericService<E> {
+public abstract class GenericServiceImpl<D> implements GenericService<D> {
 
     private final GenericRepository genericRepository;
+    private final GenericMapper genericMapper;
 
-    private Class<E> clazz;
+    private Class<D> clazz;
 
 
-    public GenericServiceImpl(GenericRepository genericRepository) {
+    public GenericServiceImpl(GenericRepository genericRepository, GenericMapper genericMapper) {
         this.genericRepository = genericRepository;
-        clazz = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.genericMapper = genericMapper;
+        clazz = (Class<D>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
     }
 
 
     @Override
-    public List<E> getAll() {
-        return genericRepository.findAll();
+    public List<D> getAll() {
+        return genericMapper.mapToDtoList(genericRepository.findAll());
     }
 
     @Override
-    public E getById(Long id) throws Throwable {
-        return (E) genericRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Could not get " + clazz.getSimpleName() + " By ID"));
+    public D getById(Long id) throws Throwable {
+        return (D) genericMapper.mapToDto(
+                genericRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Could not get " + clazz.getSimpleName() + " By ID"))
+        );
     }
 
     @Override
-    public E save(E entity) throws Throwable {
-        return (E) genericRepository.save(entity).orElseThrow(() -> new EntityNotFoundException("Could not save " + clazz.getSimpleName()));
+    public D save(D dto) throws Throwable {
+        return (D) genericMapper.mapToDto(
+                genericRepository.save(genericMapper.mapToEntity(dto)).orElseThrow(() -> new EntityNotFoundException("Could not save " + clazz.getSimpleName()))
+        );
     }
 
     @Override

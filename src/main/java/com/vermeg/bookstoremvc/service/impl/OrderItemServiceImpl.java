@@ -1,14 +1,14 @@
 package com.vermeg.bookstoremvc.service.impl;
 
-import com.vermeg.bookstoremvc.dao.entity.Book;
 import com.vermeg.bookstoremvc.dao.entity.OrderItem;
 import com.vermeg.bookstoremvc.dao.repository.OrderItemRepository;
+import com.vermeg.bookstoremvc.model.OrderItemDTO;
 import com.vermeg.bookstoremvc.service.OrderItemService;
+import com.vermeg.bookstoremvc.service.mapper.OrderItemMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,23 +16,28 @@ import java.util.List;
 public class OrderItemServiceImpl extends GenericServiceImpl<OrderItem> implements OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
+    private final OrderItemMapper orderItemMapper;
 
-    public OrderItemServiceImpl(OrderItemRepository orderItemRepository) {
-        super(orderItemRepository);
+    public OrderItemServiceImpl(OrderItemRepository orderItemRepository, OrderItemMapper orderItemMapper) {
+        super(orderItemRepository, orderItemMapper);
         this.orderItemRepository = orderItemRepository;
+        this.orderItemMapper = orderItemMapper;
     }
 
     @Override
     @Transactional
-    public OrderItem update(OrderItem orderItem) {
-        return orderItemRepository.update(orderItem).orElseThrow(() -> new EntityNotFoundException("Could not update Book"));
+    public OrderItemDTO update(OrderItemDTO orderItem) {
+        return orderItemMapper.mapToDto(
+                orderItemRepository.update(orderItemMapper.mapToEntity(orderItem)).
+                        orElseThrow(() -> new EntityNotFoundException("Could not update Book"))
+        );
 
     }
 
     @Override
     @Transactional
-    public List<OrderItem> getItemsByOrder(Long id) {
-        return orderItemRepository.findAllByOrderId(id);
+    public List<OrderItemDTO> getItemsByOrder(Long id) {
+        return orderItemMapper.mapToDtoList(orderItemRepository.findAllByOrderId(id));
     }
 
 

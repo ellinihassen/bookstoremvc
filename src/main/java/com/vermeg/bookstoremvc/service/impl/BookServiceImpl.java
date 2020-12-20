@@ -1,13 +1,12 @@
 package com.vermeg.bookstoremvc.service.impl;
 
 
-import com.vermeg.bookstoremvc.dao.entity.Book;
-
-import com.vermeg.bookstoremvc.dao.entity.OrderItem;
 import com.vermeg.bookstoremvc.dao.repository.BookRepository;
+import com.vermeg.bookstoremvc.model.BookDTO;
+import com.vermeg.bookstoremvc.model.OrderItemDTO;
 import com.vermeg.bookstoremvc.service.BookService;
 import com.vermeg.bookstoremvc.service.OrderItemService;
-import com.vermeg.bookstoremvc.service.mapper.Impl.BookMapperImpl;
+import com.vermeg.bookstoremvc.service.mapper.BookMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,16 +14,16 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class BookServiceImpl extends GenericServiceImpl<Book> implements BookService {
+public class BookServiceImpl extends GenericServiceImpl<BookDTO> implements BookService {
 
     private final BookRepository bookRepository;
 
     private final OrderItemService orderItemService;
 
-    private final BookMapperImpl bookMapper;
+    private final BookMapper bookMapper;
 
-    public BookServiceImpl(BookRepository bookRepository, OrderItemService orderItemService, BookMapperImpl bookMapper) {
-        super(bookRepository);
+    public BookServiceImpl(BookRepository bookRepository, OrderItemService orderItemService, BookMapper bookMapper) {
+        super(bookRepository, bookMapper);
         this.bookRepository = bookRepository;
         this.orderItemService = orderItemService;
         this.bookMapper = bookMapper;
@@ -32,27 +31,30 @@ public class BookServiceImpl extends GenericServiceImpl<Book> implements BookSer
 
     @Override
     @Transactional
-    public Book update(Book book) {
-        return bookRepository.update(book).orElseThrow(() -> new EntityNotFoundException("Could not update Book"));
+    public BookDTO update(BookDTO book) {
+        return bookMapper.mapToDto(
+                bookRepository.update(bookMapper.mapToEntity(book))
+                        .orElseThrow(() -> new EntityNotFoundException("Could not update Book"))
+        );
     }
 
     @Override
     @Transactional
-    public List<Book> getAllBooksByCategoryId(Long id) {
-        return bookRepository.findAllByCategoryId(id);
+    public List<BookDTO> getAllBooksByCategoryId(Long id) {
+        return bookMapper.mapToDtoList(bookRepository.findAllByCategoryId(id));
     }
 
     @Override
     @Transactional
-    public List<Book> getBookByAuthorId(Long id) {
-        return bookRepository.findAllByAuthorId(id);
+    public List<BookDTO> getBookByAuthorId(Long id) {
+        return bookMapper.mapToDtoList(bookRepository.findAllByAuthorId(id));
     }
 
     @Override
-    public Double calculateTotalAmount(List<Book> books) {
-        List<OrderItem> items = bookMapper.mapBookListToOrderItemList(books);
-        double somme =0;
-        for (OrderItem orderItem : items) {
+    public Double calculateTotalAmount(List<BookDTO> books) {
+        List<OrderItemDTO> items = bookMapper.mapBookListToOrderItemList(books);
+        double somme = 0;
+        for (OrderItemDTO orderItem : items) {
             somme += orderItem.getPrice();
         }
         return somme;

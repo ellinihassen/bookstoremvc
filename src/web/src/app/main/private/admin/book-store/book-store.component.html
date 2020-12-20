@@ -1,0 +1,80 @@
+<div class="content container">
+
+  Make sure to create the Category and the Author before the Book
+
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+  <!-- Navbar brand -->
+  <span class="navbar-brand">Manage Book Store:</span>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="basicExampleNav">
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" (click)="goTo('/private/admin/book-store/category')">
+        <a class="nav-link">Create Caregory</a>
+      </li>
+      <li class="nav-item" (click)="goTo('/private/admin/book-store/author')">
+        <a class="nav-link">Create Author</a>
+      </li>
+
+    </ul>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+
+
+    <a class="btn btn-blue-grey" (click)="goTo('/private/admin/book-store/book')">Add</a>
+    <hr>
+    <div class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Book List</h2>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>release Date</th>
+              <th>photo Name</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let book of books ">
+              <td>{{book.id}}</td>
+              <td>{{book.title}}</td>
+              <td>{{book.price}}</td>
+              <td>{{book.description}}</td>
+              <td>{{book.releaseDate}}</td>
+              <td>{{book.photoName}}</td>
+              <td>
+                <button (click)="deleteBook(book.id)" class="btn btn-danger">Delete</button>
+                <button (click)="updateBook(book)" class="btn btn-info" style="margin-left: 10px">Update</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+

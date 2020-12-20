@@ -3,13 +3,13 @@ package com.vermeg.bookstoremvc.service;
 import java.util.List;
 
 
-public interface GenericService<E> {
+public interface GenericService<D> {
 
-    public List<E> getAll();
+    public List<D> getAll();
 
-    public E getById(Long id) throws Throwable;
+    public D getById(Long id) throws Throwable;
 
-    public E save(E entity) throws Throwable;
+    public D save(D dto) throws Throwable;
 
     public Boolean deleteById(Long id);
 }

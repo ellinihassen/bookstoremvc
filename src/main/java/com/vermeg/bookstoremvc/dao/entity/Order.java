@@ -38,23 +38,5 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
-    @Transient
-    private Double totalPrice;
 
-    private static final Integer tva = 5;
-
-
-    public Order(OrderStateEnum status, User user) {
-        Date date = new Date();
-        this.status = status;
-        this.user = user;
-        this.date = date;
-    }
-
-    public Double getTotalPrice() {
-        for (OrderItem orderItem : orderItems) {
-            totalPrice += orderItem.getPrice();
-        }
-        return totalPrice;
-    }
 }

@@ -1,0 +1,91 @@
+<div class="content container">
+  <a class="btn btn-success" (click)="goTo('public/landing-page')">return</a>
+  <hr>
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <img [src]="'assets/img/books/'+book?.photoName" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+            <div class="mb-3">
+              <a href="">
+                <span class="badge purple mr-1">{{book?.category?.name}}</span>
+              </a>
+              <a href="">
+                <span class="badge blue mr-1">New</span>
+              </a>
+              <a href="">
+                <span class="badge red mr-1">Bestseller</span>
+              </a>
+            </div>
+
+            <p class="lead">
+              <span class="mr-1">
+                {{book?.price | currency: 'USD'}}
+              </span>
+
+            </p>
+
+            <p class="lead font-weight-bold">Description</p>
+
+            <p>{{book?.description}}</p>
+
+            <div class="d-flex justify-content-left">
+              <!-- Default input -->
+              <input type="number" #box
+                     (keyup.enter)="update(box.value)"
+                     (blur)="update(box.value)" aria-label="Search" class="form-control" style="width: 100px">
+              <button (click)="addToCart(book)" class="btn btn-primary btn-md my-0 p">Add to cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </button>
+
+            </div>
+
+          </div>
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+
+          <h4 class="my-4 h4">Author Information</h4>
+          <li>{{book?.author?.name}}</li>
+          <li>{{book?.author?.lastName}}</li>
+          <li>{{book?.author?.email}}</li>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+
+    </div>
+  </main>
+  <!--Main layout-->
+</div>

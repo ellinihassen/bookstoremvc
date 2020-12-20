@@ -1,3 +1,4 @@
+/*
 package com.vermeg.bookstoremvc.aop;
 
 
@@ -55,3 +56,4 @@ public class LoggingAspect {
 //
 //    }
 }
+*/

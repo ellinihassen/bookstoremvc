@@ -1,0 +1,16 @@
+<div class="content container">
+  <a class="btn btn-success" (click)="goTo('private/admin/book-store/category')">return</a>
+  <hr>
+  <h1> Add Category </h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="categoryForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input name="name" id="name" formControlName="name" type="text" class="form-control" required>
+        </div>
+        <button class="btn btn-primary" (click)="addCategory()">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

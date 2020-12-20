@@ -1,0 +1,24 @@
+<div class="content container">
+  <a class="btn btn-success" (click)="goTo('private/admin/book-store/author')">return</a>
+  <hr>
+  <h1> Add Author </h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="authorForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input name="name" id="name" formControlName="name" type="text" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">lastName</label>
+          <input name="name" id="lastName" formControlName="lastName" type="text" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input name="email" id="email" formControlName="email" type="text" class="form-control" required>
+        </div>
+        <button class="btn btn-primary" (click)="addAuthor()">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

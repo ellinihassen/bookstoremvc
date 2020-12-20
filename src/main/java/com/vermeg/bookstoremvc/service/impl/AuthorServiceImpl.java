@@ -2,9 +2,11 @@ package com.vermeg.bookstoremvc.service.impl;
 
 import com.vermeg.bookstoremvc.dao.entity.Author;
 import com.vermeg.bookstoremvc.dao.repository.AuthorRepository;
+import com.vermeg.bookstoremvc.model.AuthorDTO;
 import com.vermeg.bookstoremvc.service.AuthorService;
+import com.vermeg.bookstoremvc.service.mapper.AuthorMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -12,14 +14,20 @@ import javax.persistence.EntityNotFoundException;
 public class AuthorServiceImpl extends GenericServiceImpl<Author> implements AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final AuthorMapper authorMapper;
 
-    public AuthorServiceImpl(AuthorRepository authorRepository) {
-        super(authorRepository);
+    public AuthorServiceImpl(AuthorRepository authorRepository, AuthorMapper authorMapper) {
+        super(authorRepository, authorMapper);
         this.authorRepository = authorRepository;
+        this.authorMapper = authorMapper;
     }
 
     @Override
-    public Author update(Author author) {
-        return authorRepository.update(author).orElseThrow(() -> new EntityNotFoundException("Could not update Author"));
+    public AuthorDTO update(AuthorDTO author) {
+
+        return authorMapper.mapToDto(
+                authorRepository.update(authorMapper.mapToEntity(author))
+                        .orElseThrow(() -> new EntityNotFoundException("Could not update Author"))
+        );
     }
 }

@@ -6,36 +6,36 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public abstract class GenericController<E> {
+public abstract class GenericController<D> {
 
-    private final GenericService<E> genericService;
+    private final GenericService<D> genericService;
 
-    protected GenericController(GenericService<E> genericService) {
+    protected GenericController(GenericService<D> genericService) {
         this.genericService = genericService;
     }
 
     @GetMapping("")
-    public ResponseEntity<List<E>> getAllEntities() {
+    public ResponseEntity<List<D>> getAll() {
         return ResponseEntity.ok(genericService.getAll());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<E> getEntity(@PathVariable Long id) throws Throwable {
+    public ResponseEntity<D> getById(@PathVariable Long id) throws Throwable {
 
-        E entity = genericService.getById(id);
+        D entity = genericService.getById(id);
 
         return ResponseEntity.ok(entity);
     }
 
     @PostMapping("")
-    public ResponseEntity<E> addEntity(@RequestBody E adresse) throws Throwable {
-        return ResponseEntity.ok(genericService.save(adresse));
+    public ResponseEntity<D> add(@RequestBody D dto) throws Throwable {
+        return ResponseEntity.ok(genericService.save(dto));
 
     }
 
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Boolean> deleteEntity(@PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         genericService.deleteById(id);
         return ResponseEntity.ok(Boolean.TRUE);
     }

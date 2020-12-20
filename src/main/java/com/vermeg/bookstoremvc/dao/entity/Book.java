@@ -1,16 +1,15 @@
 package com.vermeg.bookstoremvc.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
-
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -23,11 +22,9 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String title;
     private Double price;
-
-    private Date releaseDate;
+    private LocalDate releaseDate;
     private String description;
 
     @Column(name = "photo_name")
@@ -40,7 +37,6 @@ public class Book implements Serializable {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
 
 
 }

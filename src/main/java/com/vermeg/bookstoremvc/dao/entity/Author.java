@@ -1,6 +1,7 @@
 package com.vermeg.bookstoremvc.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,8 @@ public class Author implements Serializable {
     private String lastName;
     @Column(name = "email")
     private String email;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Book> books;
 

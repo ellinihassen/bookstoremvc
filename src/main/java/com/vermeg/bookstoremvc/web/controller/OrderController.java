@@ -2,6 +2,7 @@ package com.vermeg.bookstoremvc.web.controller;
 
 
 import com.vermeg.bookstoremvc.dao.entity.Order;
+import com.vermeg.bookstoremvc.model.OrderDTO;
 import com.vermeg.bookstoremvc.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +20,17 @@ public class OrderController extends GenericController<Order> {
     }
 
     @GetMapping("/user/{id}")
-    public List<Order> getAllOrdersByUser(@PathVariable Long id) {
+    public List<OrderDTO> getAllOrdersByUser(@PathVariable Long id) {
         return orderService.getOrdersByUser(id);
     }
 
     @GetMapping("/user/{id}/{status}")
-    public List<Order> getAllOrdersByUserAndStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
+    public List<OrderDTO> getAllOrdersByUserAndStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
         return orderService.getOrderByUserAndStatus(id, status);
     }
 
     @PutMapping("")
-    public Order updateOrder(@RequestBody Order order) {
+    public OrderDTO updateOrder(@RequestBody OrderDTO order) {
         return orderService.update(order);
     }
 
